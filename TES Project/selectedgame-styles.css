@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-image: url('images/backgrounds/SelectedGame_Background.png');
+    background-color: #000; /* Fallback color */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #e0e0e0;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #8a7c4f;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #6f623f;
+}
+
+.container {
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.game-logo {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 0px;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.map-container {
+    margin-bottom: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.map {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border: 1px solid #8a7c4f;
+    box-shadow: 0 0 20px rgba(138, 124, 79, 0.3);
+}
+
+.intro-text {
+    text-align: justify;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #d0d0d0;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px 0;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 3rem;
+        letter-spacing: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+        letter-spacing: 5px;
+    }
+    
+    .intro-text {
+        font-size: 1rem;
+    }
+}
