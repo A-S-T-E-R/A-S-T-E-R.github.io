@@ -1,11 +1,10 @@
-// Matrix Background
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
+const chars = "-NULL-ASTER-NULL-ASTER-NULL-ASTER-NULL-ASTER-NULL-ASTER-NULL-ASTER";
 const charArray = chars.split("");
 const fontSize = 14;
 const columns = canvas.width / fontSize;
@@ -36,12 +35,10 @@ function drawMatrix() {
 
 setInterval(drawMatrix, 35);
 
-// Handle window resize
 window.addEventListener('resize', function() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
-    // Recalculate columns and reset drops
     const newColumns = canvas.width / fontSize;
     drops.length = 0;
     
