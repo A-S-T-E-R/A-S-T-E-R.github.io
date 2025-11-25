@@ -1,4 +1,3 @@
-// Mobile Menu Toggle
 document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.getElementById('menuToggle');
     const sideNav = document.querySelector('.side-nav');
@@ -15,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
             overlay.classList.remove('active');
         });
         
-        // Close menu when clicking on a nav item (mobile)
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
             item.addEventListener('click', function() {
@@ -24,14 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     overlay.classList.remove('active');
                 }
                 
-                // Update active state
                 navItems.forEach(nav => nav.classList.remove('active'));
                 this.classList.add('active');
             });
         });
     }
     
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
