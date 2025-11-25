@@ -1,6 +1,4 @@
-// Load section content dynamically
 document.addEventListener('DOMContentLoaded', function() {
-    // Function to load section content
     function loadSection(sectionId) {
         const sectionElement = document.getElementById(sectionId);
         if (!sectionElement) {
@@ -8,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Fetch the section HTML
         fetch(`sections/${sectionId}.html`)
             .then(response => {
                 if (!response.ok) {
@@ -31,20 +28,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
     
-    // Load all sections
     const sections = ['home', 'about', 'projects', 'contact', 'resume'];
     sections.forEach(section => {
         loadSection(section);
     });
     
-    // Update active nav item on scroll
     window.addEventListener('scroll', function() {
         const scrollPosition = window.scrollY;
         
-        // Get all section elements
         const sectionElements = sections.map(id => document.getElementById(id));
         
-        // Find the current section in view
         let currentSection = '';
         sectionElements.forEach(section => {
             if (!section) return;
@@ -57,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Update active nav item
         if (currentSection) {
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => {
