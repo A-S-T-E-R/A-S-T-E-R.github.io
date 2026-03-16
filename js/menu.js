@@ -17,15 +17,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
             item.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    sideNav.classList.remove('open');
-                    overlay.classList.remove('active');
-                }
-                
+                sideNav.classList.remove('open');
+                overlay.classList.remove('active');
                 navItems.forEach(nav => nav.classList.remove('active'));
+                
                 this.classList.add('active');
             });
         });
+
     }
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
