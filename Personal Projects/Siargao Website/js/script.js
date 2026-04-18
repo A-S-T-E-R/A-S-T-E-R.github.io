@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sections = ["home", "about", "attractions", "gallery", "contact"];
   const contentDiv = document.getElementById("content");
 
-  // Load sections dynamically
+  // For Section Pulling
   sections.forEach(section => {
     fetch(`sections/${section}.html`)
       .then(res => res.text())
@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
         wrapper.innerHTML = data;
         contentDiv.appendChild(wrapper);
 
-        // Initialize gallery lightbox after gallery loads
+        // Gallery lightbox after gallery loads
         if(section === "gallery") initLightbox();
-        // Initialize contact form after contact loads
+        // Contact form after contact loads
         if(section === "contact") initContactForm();
       });
   });
