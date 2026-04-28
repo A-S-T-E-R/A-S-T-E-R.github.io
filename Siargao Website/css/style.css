@@ -1,0 +1,809 @@
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@400;600&display=swap');
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #00bcd4, #ffebcd);
+  padding: 0.5rem 2rem;   /* reduced vertical padding */
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  height: 60px;           /* fixed compact height */
+}
+
+/* Logo */
+.logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 2.5rem;      /* larger font size */
+  line-height: 1;         /* prevents extra vertical space */
+  display: inline-block;  /* keeps transform scaling clean */
+  color: #fff;}
+
+/* Optional: scale logo slightly without affecting navbar height */
+.logo {
+  transform: scale(1.5);  /* makes logo visually bigger */
+}
+
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #004d40;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.6);
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  background: #ffe082; 
+  color: #00695c;
+  box-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+.back-button {
+  display: inline-block;
+  margin: 1rem 1rem;       
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(135deg, #ffebcd, #00bcd4);
+  color: #004d40;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: linear-gradient(135deg, #00bcd4, #ffebcd);
+  color: #00695c;
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+}
+
+/* Video background only for index */
+.index .video-background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.index .video-background video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;   /* full viewport width */
+  height: 100vh;  /* full viewport height */
+  object-fit: cover;
+}
+
+/* Overlay for readability */
+.index .video-background::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+}
+
+/* Index page content */
+.index .content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  padding-top: 50vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Disclaimer footer */
+.disclaimer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9em;
+  font-family: Arial, sans-serif;
+}
+
+
+/* General */
+body {
+  margin: 0;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-size: 20px;
+  background: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+div .about{
+  padding: 4rem 2rem;
+  margin: 0 auto;
+  text-align: left;
+}
+
+div .attractions-page{
+  padding: 4rem 2rem;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Universal Beach Page */
+.beach-page {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+
+/* Hero Banner */
+.beach-hero {
+  height: 80vh;
+  background: center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.beach-hero .hero-overlay {
+  background: rgba(0,0,0,0.5);
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+  border-radius: 12px;
+  animation: fadeIn 1.2s ease-in;
+}
+.beach-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.beach-hero p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.cta-button {
+  background: #00bcd4;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+.cta-button:hover { background: #00695c; }
+
+/* Two-column layout (video + facts) */
+.beach-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.beach-video {
+  flex: 2; /* 3/4 width */
+}
+.beach-video iframe {
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+.beach-facts {
+  flex: 2; /* 1/4 width */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.fact-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+.fact-card:hover { transform: translateY(-5px); }
+
+/* Celebrity/Vlogger Section (below video + facts) */
+.beach-celebs {
+  margin-top: 3rem;
+}
+.beach-celebs h3 {
+  margin-bottom: 1rem;
+  color: #00695c;
+  text-align: center;
+}
+.celeb-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  transition: transform 0.3s ease;
+}
+.celeb-card:hover { transform: translateY(-5px); }
+.celeb-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.celeb-card strong {
+  color: #004d40;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.celeb-card p {
+  font-size: 0.95rem;
+  margin: 0.3rem 0;
+}
+
+/* Gallery Button */
+.gallery-btn-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+.gallery-btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #00bcd4, #ffebcd);
+  color: #004d40;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+.gallery-btn:hover {
+  background: linear-gradient(135deg, #ffebcd, #00bcd4);
+  color: #00695c;
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+}
+
+/* Lightbox navigation buttons */
+.lightbox .prev,
+.lightbox .next {
+  position: absolute;
+  top: 50%;                  /* vertically centered */
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 1100;             /* above the image */
+}
+
+/* Left button */
+.lightbox .prev {
+  left: 20px;                /* push to left side */
+}
+
+/* Right button */
+.lightbox .next {
+  right: 20px;               /* push to right side */
+}
+
+/* Hover effect */
+.lightbox .prev:hover,
+.lightbox .next:hover {
+  background: rgba(0,0,0,0.8);
+  transform: translateY(-50%) scale(1.05);
+}
+
+
+/* Storytelling Section */
+.beach-story {
+  margin-top: 3rem;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.beach-story h2 {
+  font-size: 2rem;
+  color: #00695c;
+  margin-bottom: 1rem;
+}
+.beach-story p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+.beach-story blockquote {
+  margin-top: 1.5rem;
+  font-style: italic;
+  color: #004d40;
+  background: rgba(0,188,212,0.1);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* About Page Layout */
+.about {
+  position: relative;
+  background: url('https://static.vecteezy.com/system/resources/previews/056/853/575/large_2x/seashells-arranged-on-sandy-background-evoking-beach-vibe-free-photo.jpeg') 
+              center/cover no-repeat;
+  background-attachment: fixed; /* key for parallax effect */
+  min-height: 100vh;            /* ensures it fills the viewport */
+  display: flex;
+  flex-direction: column; /* stack children vertically */
+  justify-content: flex-start; /* align items at the top */
+  align-items: center;
+  padding: 4rem 2rem;
+}
+
+.about video {
+  position: relative;
+  z-index: 2;   /* ensures video is above overlay */
+}
+
+/* Overlay for readability */
+.about::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.3); /* lighter overlay so background is visible */
+  z-index: 0;
+}
+
+/* Container for two-column layout */
+.about-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 1200px;
+  width: 100%;
+  position: relative;
+  z-index: 1; /* ensures content sits above overlay */
+}
+
+/* Image column */
+.about-image {
+  flex: 1 1 40%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.about-image:hover {
+  transform: scale(1.05);
+}
+.about-image img {
+  width: 100%;
+  display: block;
+}
+
+/* Text column */
+.about-text {
+  flex: 1 1 55%;
+  color: #004d40;
+  font-family: 'Open Sans', Arial, sans-serif;
+  position: relative;
+  z-index: 1; /* ensures text is above overlay */
+}
+.about-text h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #00695c;
+}
+.about-text p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+  
+
+/* Attractions Page */
+
+.attractions-page {
+  background: linear-gradient(135deg, #ffebcd, #00bcd4); /* ocean blue → sandy beige */
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Fade effect on edges (keeps lower z-index than buttons) */
+.carousel-wrapper::before,
+.carousel-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100px;   /* width of fade */
+  height: 100%;
+  z-index: 5;
+  pointer-events: none; /* allow clicks through */
+}
+
+.carousel-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
+}
+
+.carousel-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
+}
+
+/* Inner container that holds the sliding track */
+.carousel-container {
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+  /* ensure content doesn't hide behind side buttons */
+  padding-left: 72px;   /* button width (48) + gap (12) + buffer */
+  padding-right: 72px;  /* same on right */
+}
+
+/* Carousel track */
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+/* Cards */
+.carousel .card {
+  flex: 0 0 280px;
+  margin: 0 1rem;
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0.6;
+}
+
+.carousel .card.active {
+  transform: scale(1.2);   /* pop out effect */
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Side-positioned carousel buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,77,64,0.9);
+  color: #fff;
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20; /* above fade overlays and cards */
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  transition: background 0.18s ease, transform 0.12s ease;
+}
+
+/* Left and right positions */
+.carousel-btn.left {
+  left: 12px;
+}
+
+.carousel-btn.right {
+  right: 12px;
+}
+
+/* Hover and active states */
+.carousel-btn:not(:disabled):hover {
+  background: rgba(0,77,64,1);
+  transform: translateY(-50%) scale(1.03);
+}
+
+.carousel-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 520px) {
+  .carousel-btn { width: 40px; height: 40px; font-size: 1rem; }
+  .carousel-container { padding-left: 56px; padding-right: 56px; }
+}
+
+/* Gallery Page */
+.gallery-page {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4); /* coral pink → soft peach */
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+
+/* Modern Masonry Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  animation: fadeIn 1s ease-in;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  overflow: hidden;
+  /* NEW: let each item size itself naturally */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-item img {
+  max-width: 100%;
+  height: auto;        /* keeps aspect ratio */
+  object-fit: contain; /* ensures no cropping */
+  display: block;
+  cursor: pointer;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+}
+
+.caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .caption {
+  opacity: 1;
+}
+
+/* Lightbox with Glassmorphism */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.lightbox img {
+  max-width: 90vw;   /* up to 90% of viewport width */
+  max-height: 90vh;  /* up to 90% of viewport height */
+  width: auto;       /* don’t force width */
+  height: auto;      /* don’t force height */
+  object-fit: contain; /* keep full image visible */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+
+
+.lightbox .close {
+  position: absolute;
+  top: 20px; right: 40px;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+
+.lightbox button {
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 50%;
+  margin: 0 1rem;
+}
+
+#lightbox-caption {
+  margin-top: 1rem;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Contact Page */
+.contact-page {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb); /* sky blue → light aqua */
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+
+/* Cloud 9 Page */
+.cloud9-page {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+
+/* Sugba Lagoon Page */
+.sugba-page {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+
+/* Magpupungko Page */
+.magpupungko-page {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+
+/* Island Hopping Page */
+.island-page {
+ background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+
+
+/* Attractions Cards */
+.attractions-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.card a {
+  text-decoration: none;
+  color: inherit; 
+  display: block; 
+}
+
+
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 280px;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+}
+
+.card h3 {
+  margin: 1rem 0 0.5rem;
+}
+
+.card p {
+  padding: 0 1rem 1rem;
+  font-size: 0.9rem;
+}
+
+/* Gallery */
+.gallery {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.gallery img {
+  width: 250px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox img {
+  max-width: 80%;
+  border-radius: 10px;
+}
+
+.lightbox .close {
+  position: absolute;
+  top: 20px; right: 40px;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* Contact Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: auto;
+}
+
+input, textarea {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 0.8rem;
+  background: #004d40;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #00796b;
+}
+
+.site-footer {
+  background: rgba(0,0,0,0.05);  
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 2rem;
+}
+

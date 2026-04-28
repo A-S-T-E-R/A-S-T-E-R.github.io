@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gallery - Discover Siargao</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1 class="logo">Siargao</h1>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="attractions.html">Attractions</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="gallery-page">
+    <h2>Photo Gallery</h2>
+    <div class="gallery"></div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+      <span class="close">&times;</span>
+      <button class="prev">&#10094;</button>
+      <img class="lightbox-content" id="lightbox-img">
+      <button class="next">&#10095;</button>
+      <div id="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <p>⠀</p>
+
+  <footer class="disclaimer">
+    <p>All media used on this site are for educational purposes only.  
+    Ownership and copyright remain with their respective creators.</p>
+  </footer>
+
+<script>
+  // Get query parameter
+  const params = new URLSearchParams(window.location.search);
+  const place = params.get('place');
+
+  // Define galleries
+  const galleries = {
+    all: [
+      {src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/78/fe/58/caption.jpg?w=1200&h=-1&s=1", caption: "Surfing in Cloud9"},
+      {src: "https://backpackingwithabook.com/wp-content/uploads/2022/10/2-1.jpg", caption: "Cloud9 Sunset"},
+      {src: "https://cdn.prod.rexby.com/image/5d7edd6e97514fefac1920a1ab605908?format=webp&width=1080&height=1350&quality=80", caption: "Boardwalk View"},
+      {src: "https://i0.wp.com/www.projectlupad.com/wp-content/uploads/2019/05/Cloud-9-Surfing-in-Siargao-Copyright-to-Project-LUPAD-3.jpg?fit=1024%2C640&ssl=1", caption: "Surfing Action"},
+      {src: "https://www.thecoastalcampaign.com/wp-content/uploads/2019/09/Cloud-9-Surf-Siargao-683x1024.jpeg", caption: "Surf Spot"},
+      {src: "https://www.thecoastalcampaign.com/wp-content/uploads/2019/12/Sugba-Lagoon-Siargao-Island.jpg", caption: "Sugba Lagoon"},
+      {src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/aa/ed/a4/sugba-lagoon.jpg?w=1200&h=-1&s=1", caption: "Sugba Lagoon2"},
+      {src: "https://www.sunchasingtravelers.com/wp-content/uploads/2020/08/sugba-lagoon-siargao-springboard-683x1024.jpg", caption: "Spring Board"},
+      {src: "https://i0.wp.com/thewanderwalkers.com/wp-content/uploads/2018/04/sugba.png?fit=1550%2C930&ssl=1", caption: "Sugba Lagoon Paddling"},
+      {src: "https://www.siargaoislandtour.com/wp-content/uploads/2020/02/sugba-lagoon.jpg", caption: "Sugba Lagoon House"},
+      {src: "https://thefroggyadventures.com/wp-content/uploads/2024/10/magpupungko-rock-pools-high-tide.jpg", caption: "Rock Pools at High Tide"},
+      {src: "https://i1.wp.com/thewanderwalkers.com/wp-content/uploads/2018/04/magpupungko.png?fit=1550%2C930&ssl=1", caption: "Crystal Clear Pools"},
+      {src: "https://thefroggyadventures.com/wp-content/uploads/2024/10/magpupungko-rock-pools-low-tide.jpg", caption: "Rock Pools at Low Tide"},
+      {src: "https://www.thecoastalcampaign.com/wp-content/uploads/2019/09/DJI_0698-1024x682.jpg", caption: "Drone View"},
+      {src: "https://projectgora.com/wp-content/uploads/2017/02/magpupungko-rock-pools.jpg", caption: "Natural Pools"},
+      {src: "https://www.journeyera.com/wp-content/uploads/2017/12/magpupungko-rock-pools-siargao-1300802-1.jpg", caption: "Tourist Spot"},
+      {src: "https://journeyofanomadicfamily.com/wp-content/uploads/uploads/2023/07/DSC_6835.jpg", caption: "Rock Formations"},
+      {src: "https://www.weseektravel.com/wp-content/uploads/2021/11/magpupungko-rock-pools-siargao-main-1.jpg", caption: "Main Pool"},
+      {src: "https://images.squarespace-cdn.com/content/v1/58f7621de4fcb542850299a4/1493891275577-PKQ9OWG2B1XU4IDRSFDO/image-asset.jpeg", caption: "Daku Island"},
+      {src: "https://www.abrahamtours.com/philippines/wp-content/uploads/2024/10/Siargai-Abraham-Tours-Philippines-2024-29.webp", caption: "Beachfront Village"},
+      {src: "https://siargaoislandphilippines.com/cdn/shop/files/1_theyoungjuanderer@2x.png?v=1741104467", caption: "Island View"},
+      {src: "https://ik.imagekit.io/tvlk/xpe-asset/AyJ40ZAo1DOyPyKLZ9c3RGQHTP2oT4ZXW+QmPVVkFQiXFSv42UaHGzSmaSzQ8DO5QIbWPZuF+VkYVRk6gh-Vg4ECbfuQRQ4pHjWJ5Rmbtkk=/2000888214625/Siargao-Tri-Island-Hopping---1-Day-Tour--25c35d2a-68bc-4785-850a-0c93e8c167b3.jpeg?tr=q-60,c-at_max,w-1280,h-720&_src=imagekit", caption: "Island Hopping"},
+      {src: "https://res.klook.com/image/upload/c_crop,h_1876,w_3000,x_0,y_62,z_0.2/w_750,h_469,c_fill,q_85/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/lw31lvdzexxshrzmxkzt.jpg", caption: "Tour Activity"},
+      {src: "https://projectgora.com/wp-content/uploads/2020/11/naked-island-scaled.jpg", caption: "Naked Island"},
+      {src: "https://dailytravelpill.com/wp-content/uploads/2020/10/guyam-island-siargao-8.jpg", caption: "Guyam Island"},
+      {src: "https://image.kkday.com/v2/image/get/w_960,c_fit,q_55,wm_auto/s1.kkday.com/product_124419/20240315090621_D2RmR/png", caption: "Island Tour"},
+      {src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/ef/46/39/alegria-beach.jpg?w=1200&h=-1&s=1", caption: "Alegria Beach"},
+      {src: "https://www.sunchasingtravelers.com/wp-content/uploads/2020/09/alegria-beach-drone-view-1024x683.jpg", caption: "Turquoise Waters"},
+      {src: "https://www.journeyera.com/wp-content/uploads/2019/01/alegria-beach--684x1024.jpg", caption: "Beach View"},
+      {src: "https://www.journeyera.com/wp-content/uploads/2019/01/alegria-beach-2-1024x682.jpg", caption: "Coastal Scene"},
+      {src: "https://i.ytimg.com/vi/E7UXjCzJ1HU/maxresdefault.jpg", caption: "Drone Shot"},
+      {src: "https://www.jonnymelon.com/wp-content/uploads/2018/11/doot-beach-siargao-18.jpg", caption: "Doot Beach"},
+      {src: "https://www.jonnymelon.com/wp-content/uploads/2018/11/doot-beach-siargao-13.jpg", caption: "Palm-Fringed Shore"},
+      {src: "https://mediaim.expedia.com/localexpert/48250529/746c5598-e836-4b3e-a264-9bb908d49790.jpg?impolicy=resizecrop&rw=500&rh=280", caption: "Beachfront"},
+      {src: "https://images.trvl-media.com/lodging/30000000/29860000/29854900/29854834/141fa7a8_y.jpg", caption: "Resort View"},
+      {src: "https://elements-resized.envatousercontent.com/elements-video-cover-images/3c8a5502-f843-446a-93c7-219e0ad32472/video_preview/video_preview_0000.jpg?w=500&cf_fit=cover&q=85&format=auto&s=61733b344fed9ae9996ab4fb9292c2bb377c0aeaf9105e4e11f7c55cc3cea603", caption: "Scenic View"},
+      {src: "https://mediaim.expedia.com/localexpert/51680291/4e533f1b-242f-4c4a-ab67-41f7621bca60.jpg?impolicy=resizecrop&rw=500&rh=280", caption: "Local Spot"},
+      {src: "https://a0.muscache.com/im/pictures/miso/Hosting-955022173401598264/original/21f9cc1f-6075-47a8-9149-92a1576f7950.jpeg", caption: "Airbnb Stay"},
+      {src: "https://www.thecoastalcampaign.com/wp-content/uploads/2019/10/DJI_0931-819x1024.jpg", caption: "Pacifico Beach"},
+      {src: "https://thefroggyadventures.com/wp-content/uploads/2024/12/pacifico-beach-siargao-views.jpg", caption: "Surfing in Pacifico"},
+      {src: "https://www.thecoastalcampaign.com/wp-content/uploads/2019/10/P5180195-768x1024.jpg", caption: "Coastal View"},
+      {src: "https://static.wixstatic.com/media/4f04c0_5e1182a9402d4fd4a85c6d2cd29a2991~mv2.png/v1/fill/w_980,h_735,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/4f04c0_5e1182a9402d4fd4a85c6d2cd29a2991~mv2.png", caption: "Beach Panorama"},
+      {src: "https://www.weseektravel.com/wp-content/uploads/2021/11/siargao-lighthouse-pacifico-beach-1.jpg", caption: "Pacifico Lighthouse"},
+      {src: "https://thefroggyadventures.com/wp-content/uploads/2024/12/pacifico-beach-siargao-beach-vibes.jpg", caption: "Beach Vibes"},
+      {src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/6a/18/b4/garden-house-rooms-and.jpg?w=900&h=500&s=1", caption: "Garden House Stay"},
+      {src: "https://scontent.fmnl9-3.fna.fbcdn.net/v/t39.30808-6/486161064_1173450661237369_2359448549694099801_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHl6t44uvl0J0eqArCqE3hTvqZOhwoo2DW-pk6HCijYNVThQHVArK1VbQpitXTh3gOD6DC3kcWP6FB-uyJWpCnI&_nc_ohc=BICXQ1EQEegQ7kNvwFpdUZg&_nc_oc=AdonHYdSAt3_9Hs-BaXb47li38vVTwbpo6JysKSeLIyHY2bHBnAvbxgQsoAJjY5l8kE&_nc_zt=23&_nc_ht=scontent.fmnl9-3.fna&_nc_gid=oRo0ulDPbO2Qcvzpv0QW4g&_nc_ss=7b2a8&oh=00_Af3zfjLfxbGhh2fbgnudfbLMcG4HIx-YMPc9J37Exbm3wA&oe=69F5189E", caption: "Pamomoan Beach"},
+      {src: "https://scontent.fmnl9-6.fna.fbcdn.net/v/t39.30808-6/485767516_1171736648075437_25591277539534006_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGATkF3RY9CathnhxwNhZIK--5lHLiVcnD77mUcuJVycGOEV71BN0vVj3usoM6dn5ZKkpoGABtBBo0tdl8xpWJE&_nc_ohc=-Kz81ddDkfIQ7kNvwF0nouZ&_nc_oc=Adrhthp4bfJNRyx-Cmt36QBWSjn_z3JNWRCDNdgmVhc6piDXhPeIrW5-yD_n4_mgm-g&_nc_zt=23&_nc_ht=scontent.fmnl9-6.fna&_nc_gid=xu-NNpuhx3LdkG8l17gQdQ&_nc_ss=7b2a8&oh=00_Af13GmuLtE9LSu2KPa4NG95aIrvsK2c3iFoiMvF8nlchvA&oe=69F53E82", caption: "Secluded Paradise"},
+      {src: "https://scontent.fmnl9-1.fna.fbcdn.net/v/t39.30808-6/486022007_1171736841408751_8544185584179661234_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFyFqYu1HNG9jQYLPEiNNBYCdy3BEt8_QsJ3LcES3z9C8QB38Si_rp7h-jfKE_mocOPMWqggzyXD5XTKFIey6zA&_nc_ohc=U-UM3QMyF3QQ7kNvwH_HBwx&_nc_oc=AdqinXQJtbh9Z1rW5qHSfceE60tkGKx9-rD7-9wpvnkb3L-7IaVu5RUOJY33HwUT1Uk&_nc_zt=23&_nc_ht=scontent.fmnl9-1.fna&_nc_gid=fkBaxiohNleoHJ_WY4_hIQ&_nc_ss=7b2a8&oh=00_Af1LDuhNWXQW9yEWtSEtQdpdr56PKHgqdVPc2i5LDVc3Bw&oe=69F5407D", caption: "Beachfront View"},
+      {src: "https://scontent.fmnl9-7.fna.fbcdn.net/v/t39.30808-6/485669502_1171513238097778_5862542110905601034_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHDaWzbPANuFscTl03TM9ynpP158GbQI6uk_XnwZtAjq3iNnRi3roUIzPOvm4QRCPjuxdRBcDg7bLIZtF9XpzKM&_nc_ohc=DlkIhKzZUkIQ7kNvwFWm96H&_nc_oc=AdpcxSEmPgxf_mD2zodi1ABjuKBOqhT9s5iShXvcYd6AaABO5fmgOUuBvbO6_C8R21o&_nc_zt=23&_nc_ht=scontent.fmnl9-7.fna&_nc_gid=7cfXJ60ga7c9R8tuJuDTwQ&_nc_ss=7b2a8&oh=00_Af0OoQC6WTpq1aV1tmKYlh2U6_5e6oryHaKXC4vODdCFYg&oe=69F52A2C", caption: "Coastal Scene"},
+      {src: "https://scontent.fmnl9-1.fna.fbcdn.net/v/t1.6435-9/158807772_2683801468579330_7692047722740071416_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFBLfWpUQLuKPvpNxFngq51YgkjbrFIwipiCSNusUjCKjsQL_0lITDFNOlmrkUfa6iBZN2E-dBL743TRrdREX42&_nc_ohc=rf4GLN_C5PwQ7kNvwGoBZsZ&_nc_oc=AdqTN8EsaLr0iTLAjXyz4g5f6KXxuVrXTERV7epD0lsYMZbTAu8McDJWFLtsej4bIwU&_nc_zt=23&_nc_ht=scontent.fmnl9-1.fna&_nc_gid=js2iQDdCdGwxLQf27_grOQ&_nc_ss=7b2a8&oh=00_Af0RQfIMnERhtCCkvZVxixfradN0VpSuUKAfnv5CtdZ1zg&oe=6A16C9A6", caption: "Drone Shot"},
+      {src: "https://scontent.fmnl9-2.fna.fbcdn.net/v/t1.6435-9/158627681_2683801415246002_2069548691261806984_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGyD7izIzYPaAQSQxTnJb_hNsZHq_jWx_42xker-NbH_oQlk4V5L5L-030fyV9uSieR-udayonDOUm8D77X62Pa&_nc_ohc=t4GMFhpH0PMQ7kNvwGlV_5r&_nc_oc=AdokCDUBP9FMvzNOKHuMzBaSBzSP76WRWtxw_VO90Cnz7TGAjvSDRcb2fUPY0OBSlpk&_nc_zt=23&_nc_ht=scontent.fmnl9-2.fna&_nc_gid=ojr4ifR9FClZseHer1H-EA&_nc_ss=7b2a8&oh=00_Af3eEVM8bK--eANAC9N1onbZ64n1s2F3suVsT8KA7PTLDA&oe=6A16C2D1", caption: "Ocean View"},
+      {src: "https://scontent.fmnl9-4.fna.fbcdn.net/v/t1.6435-9/57253457_2172613149698167_8962640317664722944_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeGs8TTOCdBMYPosT8fnexJNJtC6DbMbQsQm0LoNsxtCxL0M-NBYtpwQPNr_aLNpMTRwtYhqgNOC3XjsRYlBas0u&_nc_ohc=p8iAokFnVRgQ7kNvwGjXviB&_nc_oc=AdozGGCLe5pJNVoD-NUStgDvm0sadTHhwBl5bhmI8ehkfnHOSNDZTNIsKqynZBYyTvw&_nc_zt=23&_nc_ht=scontent.fmnl9-4.fna&_nc_gid=XoAkOiBlK-MnWhVMs1DhLg&_nc_ss=7b2a8&oh=00_Af0TldxLXr4Xi3cQODFyqVFv-Jmnql-jM20vvgG9d9thGA&oe=6A16B757", caption: "Palm Trees"},
+      {src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/3c/0c/ef/caption.jpg?w=1200&h=-1&s=1", caption: "Secret Spot Beach"},
+      {src: "https://thefroggyadventures.com/wp-content/uploads/2024/12/secret-beach-siargao-ocean.jpg", caption: "Hidden Gem"},
+      {src: "https://lh5.googleusercontent.com/proxy/HD8uGMqktDp0h7YZUzisAIJcZUCB8ZcasPbz_LlA38uM0us1o49ikGmsF1WZBQVsXKgXSAmvn0tLxxWrE4GWtArNgzhCTRaFc_eXBz6rvg4ySJJkaccUVzqpZhLJ5VVGL1tZ", caption: "Remote Shore"},
+      {src: "https://www.jonnymelon.com/wp-content/uploads/2018/11/secret-beach-siargao-13.jpg", caption: "Secret Cove"},
+      {src: "https://static.saltinourhair.com/wp-content/uploads/2019/02/23141127/travel-guide-siargao-river-1830x1440.jpg", caption: "Nearby River"},
+      {src: "https://images.trvl-media.com/lodging/39000000/38690000/38689900/38689808/c1796028.jpg", caption: "Resort Area"},
+      {src: "https://hernameislindz.com/wp-content/uploads/2018/08/IMG_5620.jpg", caption: "Beach Path"}
+    ],
+
+    cloud9: [
+      {src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/78/fe/58/caption.jpg?w=1200&h=-1&s=1", caption: "Surfing in Cloud9"},
+      {src: "https://backpackingwithabook.com/wp-content/uploads/2022/10/2-1.jpg", caption: "Cloud9 Sunset"},
+      {src: "https://cdn.prod.rexby.com/image/5d7edd6e97514fefac1920a1ab605908?format=webp&width=1080&height=1350&quality=80", caption: "Boardwalk View"},
+      {src: "https://i0.wp.com/www.projectlupad.com/wp-content/uploads/2019/05/Cloud-9-Surfing-in-Siargao-Copyright-to-Project-LUPAD-3.jpg?fit=1024%2C640&ssl=1", caption: "Surfing Action"},
+      {src: "https://www.thecoastalcampaign.com/wp-content/uploads/2019/09/Cloud-9-Surf-Siargao-683x1024.jpeg", caption: "Surf Spot"}
+    ],
+    sugba: [
+      {src: "https://www.thecoastalcampaign.com/wp-content/uploads/2019/12/Sugba-Lagoon-Siargao-Island.jpg", caption: "Sugba Lagoon"},
+      {src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/aa/ed/a4/sugba-lagoon.jpg?w=1200&h=-1&s=1", caption: "Sugba Lagoon2"},
+      {src: "https://www.sunchasingtravelers.com/wp-content/uploads/2020/08/sugba-lagoon-siargao-springboard-683x1024.jpg", caption: "Spring Board"},
+      {src: "https://i0.wp.com/thewanderwalkers.com/wp-content/uploads/2018/04/sugba.png?fit=1550%2C930&ssl=1", caption: "Sugba Lagoon Paddling"},
+      {src: "https://www.siargaoislandtour.com/wp-content/uploads/2020/02/sugba-lagoon.jpg", caption: "Sugba Lagoon House"}
+    ],
+    magpupungko: [
+      {src: "https://thefroggyadventures.com/wp-content/uploads/2024/10/magpupungko-rock-pools-high-tide.jpg", caption: "Rock Pools at High Tide"},
+      {src: "https://i1.wp.com/thewanderwalkers.com/wp-content/uploads/2018/04/magpupungko.png?fit=1550%2C930&ssl=1", caption: "Crystal Clear Pools"},
+      {src: "https://thefroggyadventures.com/wp-content/uploads/2024/10/magpupungko-rock-pools-low-tide.jpg", caption: "Rock Pools at Low Tide"},
+      {src: "https://www.thecoastalcampaign.com/wp-content/uploads/2019/09/DJI_0698-1024x682.jpg", caption: "Drone View"},
+      {src: "https://projectgora.com/wp-content/uploads/2017/02/magpupungko-rock-pools.jpg", caption: "Natural Pools"},
+      {src: "https://www.journeyera.com/wp-content/uploads/2017/12/magpupungko-rock-pools-siargao-1300802-1.jpg", caption: "Tourist Spot"},
+      {src: "https://journeyofanomadicfamily.com/wp-content/uploads/uploads/2023/07/DSC_6835.jpg", caption: "Rock Formations"},
+      {src: "https://www.weseektravel.com/wp-content/uploads/2021/11/magpupungko-rock-pools-siargao-main-1.jpg", caption: "Main Pool"}
+    ],
+    island: [
+      {src: "https://images.squarespace-cdn.com/content/v1/58f7621de4fcb542850299a4/1493891275577-PKQ9OWG2B1XU4IDRSFDO/image-asset.jpeg", caption: "Daku Island"},
+      {src: "https://www.abrahamtours.com/philippines/wp-content/uploads/2024/10/Siargai-Abraham-Tours-Philippines-2024-29.webp", caption: "Beachfront Village"},
+      {src: "https://siargaoislandphilippines.com/cdn/shop/files/1_theyoungjuanderer@2x.png?v=1741104467", caption: "Island View"},
+      {src: "https://ik.imagekit.io/tvlk/xpe-asset/AyJ40ZAo1DOyPyKLZ9c3RGQHTP2oT4ZXW+QmPVVkFQiXFSv42UaHGzSmaSzQ8DO5QIbWPZuF+VkYVRk6gh-Vg4ECbfuQRQ4pHjWJ5Rmbtkk=/2000888214625/Siargao-Tri-Island-Hopping---1-Day-Tour--25c35d2a-68bc-4785-850a-0c93e8c167b3.jpeg?tr=q-60,c-at_max,w-1280,h-720&_src=imagekit", caption: "Island Hopping"},
+      {src: "https://res.klook.com/image/upload/c_crop,h_1876,w_3000,x_0,y_62,z_0.2/w_750,h_469,c_fill,q_85/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/lw31lvdzexxshrzmxkzt.jpg", caption: "Tour Activity"},
+      {src: "https://projectgora.com/wp-content/uploads/2020/11/naked-island-scaled.jpg", caption: "Naked Island"},
+      {src: "https://dailytravelpill.com/wp-content/uploads/2020/10/guyam-island-siargao-8.jpg", caption: "Guyam Island"},
+      {src: "https://image.kkday.com/v2/image/get/w_960,c_fit,q_55,wm_auto/s1.kkday.com/product_124419/20240315090621_D2RmR/png", caption: "Island Tour"}
+    ],
+    alegria: [
+      {src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/ef/46/39/alegria-beach.jpg?w=1200&h=-1&s=1", caption: "Alegria Beach"},
+      {src: "https://www.sunchasingtravelers.com/wp-content/uploads/2020/09/alegria-beach-drone-view-1024x683.jpg", caption: "Turquoise Waters"},
+      {src: "https://www.journeyera.com/wp-content/uploads/2019/01/alegria-beach--684x1024.jpg", caption: "Beach View"},
+      {src: "https://www.journeyera.com/wp-content/uploads/2019/01/alegria-beach-2-1024x682.jpg", caption: "Coastal Scene"},
+      {src: "https://i.ytimg.com/vi/E7UXjCzJ1HU/maxresdefault.jpg", caption: "Drone Shot"}
+    ],
+    doot: [
+      {src: "https://www.jonnymelon.com/wp-content/uploads/2018/11/doot-beach-siargao-18.jpg", caption: "Doot Beach"},
+      {src: "https://www.jonnymelon.com/wp-content/uploads/2018/11/doot-beach-siargao-13.jpg", caption: "Palm-Fringed Shore"},
+      {src: "https://mediaim.expedia.com/localexpert/48250529/746c5598-e836-4b3e-a264-9bb908d49790.jpg?impolicy=resizecrop&rw=500&rh=280", caption: "Beachfront"},
+      {src: "https://images.trvl-media.com/lodging/39000000/38690000/38689900/38689808/c1796028.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill", caption: "Resort View"},
+      {src: "https://elements-resized.envatousercontent.com/elements-video-cover-images/3c8a5502-f843-446a-93c7-219e0ad32472/video_preview/video_preview_0000.jpg?w=500&cf_fit=cover&q=85&format=auto&s=61733b344fed9ae9996ab4fb9292c2bb377c0aeaf9105e4e11f7c55cc3cea603", caption: "Scenic View"},
+      {src: "https://mediaim.expedia.com/localexpert/48250529/746c5598-e836-4b3e-a264-9bb908d49790.jpg?impolicy=resizecrop&rw=500&rh=280", caption: "Local Spot"},
+      {src: "https://a0.muscache.com/im/pictures/miso/Hosting-955022173401598264/original/21f9cc1f-6075-47a8-9149-92a1576f7950.jpeg", caption: "Airbnb Stay"}
+    ],
+    pacifico: [
+      {src: "https://www.thecoastalcampaign.com/wp-content/uploads/2019/10/DJI_0931-819x1024.jpg", caption: "Pacifico Beach"},
+      {src: "https://thefroggyadventures.com/wp-content/uploads/2024/12/pacifico-beach-siargao-views.jpg", caption: "Surfing in Pacifico"},
+      {src: "https://www.thecoastalcampaign.com/wp-content/uploads/2019/10/P5180195-768x1024.jpg", caption: "Coastal View"},
+      {src: "https://static.wixstatic.com/media/4f04c0_5e1182a9402d4fd4a85c6d2cd29a2991~mv2.png/v1/fill/w_980,h_735,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/4f04c0_5e1182a9402d4fd4a85c6d2cd29a2991~mv2.png", caption: "Beach Panorama"},
+      {src: "https://www.weseektravel.com/wp-content/uploads/2021/11/siargao-lighthouse-pacifico-beach-1.jpg", caption: "Pacifico Lighthouse"},
+      {src: "https://thefroggyadventures.com/wp-content/uploads/2024/12/pacifico-beach-siargao-beach-vibes.jpg", caption: "Beach Vibes"},
+      {src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/6a/18/b4/garden-house-rooms-and.jpg?w=900&h=500&s=1", caption: "Garden House Stay"}
+    ],
+
+    pamomoan: [
+      {src: "https://scontent.fmnl9-3.fna.fbcdn.net/v/t39.30808-6/486161064_1173450661237369_2359448549694099801_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHl6t44uvl0J0eqArCqE3hTvqZOhwoo2DW-pk6HCijYNVThQHVArK1VbQpitXTh3gOD6DC3kcWP6FB-uyJWpCnI&_nc_ohc=BICXQ1EQEegQ7kNvwFpdUZg&_nc_oc=AdonHYdSAt3_9Hs-BaXb47li38vVTwbpo6JysKSeLIyHY2bHBnAvbxgQsoAJjY5l8kE&_nc_zt=23&_nc_ht=scontent.fmnl9-3.fna&_nc_gid=oRo0ulDPbO2Qcvzpv0QW4g&_nc_ss=7b2a8&oh=00_Af3zfjLfxbGhh2fbgnudfbLMcG4HIx-YMPc9J37Exbm3wA&oe=69F5189E", caption: "Pamomoan Beach"},
+      {src: "https://scontent.fmnl9-6.fna.fbcdn.net/v/t39.30808-6/485767516_1171736648075437_25591277539534006_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGATkF3RY9CathnhxwNhZIK--5lHLiVcnD77mUcuJVycGOEV71BN0vVj3usoM6dn5ZKkpoGABtBBo0tdl8xpWJE&_nc_ohc=-Kz81ddDkfIQ7kNvwF0nouZ&_nc_oc=Adrhthp4bfJNRyx-Cmt36QBWSjn_z3JNWRCDNdgmVhc6piDXhPeIrW5-yD_n4_mgm-g&_nc_zt=23&_nc_ht=scontent.fmnl9-6.fna&_nc_gid=xu-NNpuhx3LdkG8l17gQdQ&_nc_ss=7b2a8&oh=00_Af13GmuLtE9LSu2KPa4NG95aIrvsK2c3iFoiMvF8nlchvA&oe=69F53E82", caption: "Secluded Paradise"},
+      {src: "https://scontent.fmnl9-1.fna.fbcdn.net/v/t39.30808-6/486022007_1171736841408751_8544185584179661234_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFyFqYu1HNG9jQYLPEiNNBYCdy3BEt8_QsJ3LcES3z9C8QB38Si_rp7h-jfKE_mocOPMWqggzyXD5XTKFIey6zA&_nc_ohc=U-UM3QMyF3QQ7kNvwH_HBwx&_nc_oc=AdqinXQJtbh9Z1rW5qHSfceE60tkGKx9-rD7-9wpvnkb3L-7IaVu5RUOJY33HwUT1Uk&_nc_zt=23&_nc_ht=scontent.fmnl9-1.fna&_nc_gid=fkBaxiohNleoHJ_WY4_hIQ&_nc_ss=7b2a8&oh=00_Af1LDuhNWXQW9yEWtSEtQdpdr56PKHgqdVPc2i5LDVc3Bw&oe=69F5407D", caption: "Beachfront View"},
+      {src: "https://scontent.fmnl9-7.fna.fbcdn.net/v/t39.30808-6/485669502_1171513238097778_5862542110905601034_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHDaWzbPANuFscTl03TM9ynpP158GbQI6uk_XnwZtAjq3iNnRi3roUIzPOvm4QRCPjuxdRBcDg7bLIZtF9XpzKM&_nc_ohc=DlkIhKzZUkIQ7kNvwFWm96H&_nc_oc=AdpcxSEmPgxf_mD2zodi1ABjuKBOqhT9s5iShXvcYd6AaABO5fmgOUuBvbO6_C8R21o&_nc_zt=23&_nc_ht=scontent.fmnl9-7.fna&_nc_gid=7cfXJ60ga7c9R8tuJuDTwQ&_nc_ss=7b2a8&oh=00_Af0OoQC6WTpq1aV1tmKYlh2U6_5e6oryHaKXC4vODdCFYg&oe=69F52A2C", caption: "Coastal Scene"},
+      {src: "https://scontent.fmnl9-1.fna.fbcdn.net/v/t1.6435-9/158807772_2683801468579330_7692047722740071416_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFBLfWpUQLuKPvpNxFngq51YgkjbrFIwipiCSNusUjCKjsQL_0lITDFNOlmrkUfa6iBZN2E-dBL743TRrdREX42&_nc_ohc=rf4GLN_C5PwQ7kNvwGoBZsZ&_nc_oc=AdqTN8EsaLr0iTLAjXyz4g5f6KXxuVrXTERV7epD0lsYMZbTAu8McDJWFLtsej4bIwU&_nc_zt=23&_nc_ht=scontent.fmnl9-1.fna&_nc_gid=js2iQDdCdGwxLQf27_grOQ&_nc_ss=7b2a8&oh=00_Af0RQfIMnERhtCCkvZVxixfradN0VpSuUKAfnv5CtdZ1zg&oe=6A16C9A6", caption: "Drone Shot"},
+      {src: "https://scontent.fmnl9-2.fna.fbcdn.net/v/t1.6435-9/158627681_2683801415246002_2069548691261806984_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGyD7izIzYPaAQSQxTnJb_hNsZHq_jWx_42xker-NbH_oQlk4V5L5L-030fyV9uSieR-udayonDOUm8D77X62Pa&_nc_ohc=t4GMFhpH0PMQ7kNvwGlV_5r&_nc_oc=AdokCDUBP9FMvzNOKHuMzBaSBzSP76WRWtxw_VO90Cnz7TGAjvSDRcb2fUPY0OBSlpk&_nc_zt=23&_nc_ht=scontent.fmnl9-2.fna&_nc_gid=ojr4ifR9FClZseHer1H-EA&_nc_ss=7b2a8&oh=00_Af3eEVM8bK--eANAC9N1onbZ64n1s2F3suVsT8KA7PTLDA&oe=6A16C2D1", caption: "Ocean View"},
+      {src: "https://scontent.fmnl9-4.fna.fbcdn.net/v/t1.6435-9/57253457_2172613149698167_8962640317664722944_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeGs8TTOCdBMYPosT8fnexJNJtC6DbMbQsQm0LoNsxtCxL0M-NBYtpwQPNr_aLNpMTRwtYhqgNOC3XjsRYlBas0u&_nc_ohc=p8iAokFnVRgQ7kNvwGjXviB&_nc_oc=AdozGGCLe5pJNVoD-NUStgDvm0sadTHhwBl5bhmI8ehkfnHOSNDZTNIsKqynZBYyTvw&_nc_zt=23&_nc_ht=scontent.fmnl9-4.fna&_nc_gid=XoAkOiBlK-MnWhVMs1DhLg&_nc_ss=7b2a8&oh=00_Af0TldxLXr4Xi3cQODFyqVFv-Jmnql-jM20vvgG9d9thGA&oe=6A16B757", caption: "Palm Trees"}
+    ],
+
+    secret: [
+      {src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/3c/0c/ef/caption.jpg?w=1200&h=-1&s=1", caption: "Secret Spot Beach"},
+      {src: "https://thefroggyadventures.com/wp-content/uploads/2024/12/secret-beach-siargao-ocean.jpg", caption: "Hidden Gem"},
+      {src: "https://lh5.googleusercontent.com/proxy/HD8uGMqktDp0h7YZUzisAIJcZUCB8ZcasPbz_LlA38uM0us1o49ikGmsF1WZBQVsXKgXSAmvn0tLxxWrE4GWtArNgzhCTRaFc_eXBz6rvg4ySJJkaccUVzqpZhLJ5VVGL1tZ", caption: "Remote Shore"},
+      {src: "https://www.jonnymelon.com/wp-content/uploads/2018/11/secret-beach-siargao-13.jpg", caption: "Secret Cove"},
+      {src: "https://static.saltinourhair.com/wp-content/uploads/2019/02/23141127/travel-guide-siargao-river-1830x1440.jpg", caption: "Nearby River"},
+      {src: "https://images.trvl-media.com/lodging/39000000/38690000/38689900/38689808/c1796028.jpg", caption: "Resort Area"},
+      {src: "https://hernameislindz.com/wp-content/uploads/2018/08/IMG_5620.jpg", caption: "Beach Path"}
+    ]
+  };
+
+  // Choose gallery
+  const selectedGallery = galleries[place] || galleries.all;
+
+  // Render gallery items
+  const galleryDiv = document.querySelector('.gallery');
+  galleryDiv.innerHTML = selectedGallery.map(item => `
+    <div class="gallery-item">
+      <img src="${item.src}" alt="${item.caption}">
+      <div class="caption">${item.caption}</div>
+    </div>
+  `).join('');
+
+  // Lightbox logic
+  const galleryItems = document.querySelectorAll('.gallery-item img');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const caption = document.getElementById('lightbox-caption');
+  const closeBtn = document.querySelector('.lightbox .close');
+  const prevBtn = document.querySelector('.lightbox .prev');
+  const nextBtn = document.querySelector('.lightbox .next');
+
+  let currentIndex = 0;
+
+  function showLightbox(index) {
+    const img = galleryItems[index];
+    lightbox.style.display = 'flex';
+    lightboxImg.src = img.src;
+    caption.textContent = img.alt;
+    currentIndex = index;
+  }
+
+  galleryItems.forEach((img, index) => {
+    img.addEventListener('click', () => showLightbox(index));
+  });
+
+  closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+  });
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+    showLightbox(currentIndex);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % galleryItems.length;
+    showLightbox(currentIndex);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Attractions - True Loop Carousel</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <h1 class="logo">Siargao</h1>
+      <ul class="nav-links" role="menubar">
+        <li role="none"><a role="menuitem" href="index.html">Home</a></li>
+        <li role="none"><a role="menuitem" href="about.html">About</a></li>
+        <li role="none"><a role="menuitem" href="attractions.html">Attractions</a></li>
+        <li role="none"><a role="menuitem" href="gallery.html">Gallery</a></li>
+        <li role="none"><a role="menuitem" href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <main class="attractions-page">
+      <h2>Top Attractions</h2>
+
+      <div class="carousel-outer" aria-label="Attractions carousel">
+        <button class="carousel-btn left" aria-label="Previous attraction" disabled>&#10094;</button>
+        <div class="carousel-inner" role="region" aria-roledescription="carousel" aria-label="Attractions list">
+          <div class="carousel" id="carousel" role="list">
+
+            <div class="card" role="listitem">
+              <a href="alegria.html">
+                <img src="Media/Pictures/Alegria.jpeg" alt="Alegria Beach" />
+                <h3>Alegria Beach</h3>
+                <p>A pristine stretch of white sand and turquoise waters in northern Siargao.</p>
+              </a>
+            </div>
+
+            <div class="card" role="listitem">
+              <a href="cloud9.html">
+                <img src="Media/Pictures/Cloud9.jpg" alt="Cloud 9 Surfing" />
+                <h3>Cloud 9 Surfing Spot</h3>
+                <p>World-famous waves that attract surfers from across the globe.</p>
+              </a>
+            </div>
+
+            <div class="card" role="listitem">
+              <a href="doot.html">
+                <img src="Media/Pictures/Doot.jpg" alt="Doot Beach" />
+                <h3>Doot Beach</h3>
+                <p>A quiet beach surrounded by coconut trees, perfect for relaxation.</p>
+              </a>
+            </div>
+
+            <div class="card" role="listitem">
+              <a href="island.html">
+                <img src="Media/Pictures/IslandHopping.jpg" alt="Island Hopping" />
+                <h3>Island Hopping</h3>
+                <p>Explore Daku, Guyam, and Naked Island for pristine beaches and crystal waters.</p>
+              </a>
+            </div>
+
+            <div class="card" role="listitem">
+              <a href="magpupungko.html">
+                <img src="Media/Pictures/Magpupungko.jpg" alt="Magpupungko Pools" />
+                <h3>Magpupungko Rock Pools</h3>
+                <p>Natural tidal pools that reveal themselves during low tide.</p>
+              </a>
+            </div>
+
+            <div class="card" role="listitem">
+              <a href="pacifico.html">
+                <img src="Media/Pictures/Pacifico.jpg" alt="Pacifico Beach" />
+                <h3>Pacifico Beach</h3>
+                <p>Known for its long stretch of sand and powerful surf breaks.</p>
+              </a>
+            </div>
+
+            <div class="card" role="listitem">
+              <a href="pamomoan.html">
+                <img src="Media/Pictures/Pamomoan.jpg" alt="Pamomoan Beach" />
+                <h3>Pamomoan Beach</h3>
+                <p>A hidden gem with calm waters and a peaceful vibe.</p>
+              </a>
+            </div>
+
+            <div class="card" role="listitem">
+              <a href="secret.html">
+                <img src="Media/Pictures/Secret.jpg" alt="Secret Spot Beach" />
+                <h3>Secret Spot Beach</h3>
+                <p>A secluded paradise offering tranquility away from the crowds.</p>
+              </a>
+            </div>
+
+            <div class="card" role="listitem">
+              <a href="sugba.html">
+                <img src="Media/Pictures/Sugba.jpg" alt="Secret Spot Beach" />
+                <h3>Sugba Lagoon</h3>
+                <p>A crystal-clear lagoon perfect for kayaking, paddleboarding, and relaxation.</p>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel-btn right" aria-label="Next attraction" disabled>&#10095;</button>
+      </div>
+
+      <footer class="disclaimer">
+        <p>
+          All media used on this site are for educational purposes only.
+          Ownership and copyright remain with their respective creators.
+        </p>
+      </footer>
+    </main>
+
+    <script>
+      (function () {
+        document.addEventListener('DOMContentLoaded', () => {
+          const carousel = document.getElementById('carousel');
+          const leftBtn = document.querySelector('.carousel-btn.left');
+          const rightBtn = document.querySelector('.carousel-btn.right');
+
+          if (!carousel || !leftBtn || !rightBtn) return;
+
+          // initial card list
+          let cards = Array.from(carousel.children);
+          if (cards.length === 0) return;
+
+          // Controls disabled until ready
+          leftBtn.disabled = true;
+          rightBtn.disabled = true;
+
+          // State
+          let cardWidth = 0;
+          let isAnimating = false;
+          const VISIBLE_COUNT = 5; // desired number of visible cards
+
+          // Helper: wait for images to load
+          function imagesLoaded(parent) {
+            const imgs = Array.from(parent.querySelectorAll('img'));
+            if (imgs.length === 0) return Promise.resolve();
+            return Promise.all(imgs.map(img => {
+              if (img.complete) return Promise.resolve();
+              return new Promise(resolve => { img.addEventListener('load', resolve); img.addEventListener('error', resolve); });
+            }));
+          }
+
+          // Helper: compute horizontal margins (left + right) for a card
+          function getHorizontalMarginsPx(card) {
+            const s = getComputedStyle(card);
+            const ml = parseFloat(s.marginLeft) || 0;
+            const mr = parseFloat(s.marginRight) || 0;
+            return ml + mr;
+          }
+
+          // Set transform with optional animation
+          function setTransform(x, animate = true) {
+            if (!animate) {
+              carousel.style.transition = 'none';
+            } else {
+              carousel.style.transition = 'transform 0.45s ease';
+            }
+            carousel.style.transform = `translate3d(${x}px,0,0)`;
+          }
+
+          // Update cards reference and active center highlighting
+          function recalcCards() {
+            cards = Array.from(carousel.children);
+          }
+
+          function updateActive() {
+            recalcCards();
+            cards.forEach(c => c.classList.remove('active'));
+            const centerIndex = Math.floor(VISIBLE_COUNT / 2);
+            if (cards[centerIndex]) cards[centerIndex].classList.add('active');
+          }
+
+          function ensureFiveVisible(visibleCount = VISIBLE_COUNT) {
+            if (!carousel) return;
+            recalcCards();
+            if (cards.length === 0) return;
+
+            // container that constrains visible area (assumes structure: .carousel-inner > .carousel)
+            const carouselInner = carousel.parentElement || carousel;
+            const containerWidth = carouselInner.clientWidth;
+
+            // compute horizontal margin (left + right) from first card
+            const gap = getHorizontalMarginsPx(cards[0]);
+
+            // total gaps between visible cards = (visibleCount - 1) * gap
+            const totalGaps = Math.max(0, (visibleCount - 1) * gap);
+
+            // desired content width for each card so exactly visibleCount fit
+            const desiredContentWidth = Math.floor((containerWidth - totalGaps) / visibleCount);
+
+            // apply inline flex-basis to every card (overrides CSS)
+            cards.forEach(card => {
+              card.style.flex = `0 0 ${desiredContentWidth}px`;
+            });
+
+            // update the cardWidth used by translate calculations (content width + margins)
+            cardWidth = desiredContentWidth + gap;
+          }
+
+          // Move next: animate left by one card
+          function moveNext() {
+            if (isAnimating) return;
+            isAnimating = true;
+            // animate left by one card
+            setTransform(-cardWidth, true);
+          }
+
+          // Move prev: prepend last node, set transform to -cardWidth (no animation), then animate to 0
+          function movePrev() {
+            if (isAnimating) return;
+            isAnimating = true;
+            const last = carousel.lastElementChild;
+            if (!last) { isAnimating = false; return; }
+            carousel.insertBefore(last, carousel.firstElementChild);
+            // reset transform to -cardWidth instantly so the visual position is unchanged
+            setTransform(-cardWidth, false);
+            // force reflow
+            void carousel.offsetWidth;
+            // animate to 0 (slide right)
+            setTransform(0, true);
+          }
+
+          // transitionend handler: recycle nodes after animation
+          carousel.addEventListener('transitionend', (e) => {
+            if (e.propertyName !== 'transform') return;
+
+            // Determine whether we just movedNext or movedPrev by checking inline transform value
+            const inline = carousel.style.transform || '';
+
+            // If inline transform contains negative cardWidth, we just animated left (moveNext)
+            if (inline.includes(`-${Math.round(cardWidth)}`)) {
+              // move first child to end and reset transform to 0 without animation
+              const first = carousel.firstElementChild;
+              if (first) carousel.appendChild(first);
+              setTransform(0, false);
+              // force reflow then restore transition style
+              void carousel.offsetWidth;
+              carousel.style.transition = 'transform 0.45s ease';
+            } else {
+              // we movedPrev (animated to 0), nothing to move because we already prepended last before animating
+              setTransform(0, false);
+              void carousel.offsetWidth;
+              carousel.style.transition = 'transform 0.45s ease';
+            }
+
+            // update cards reference and active class
+            recalcCards();
+            updateActive();
+            isAnimating = false;
+          });
+
+          // Initialize after images load
+          imagesLoaded(carousel).then(() => {
+            // enforce exactly 5 visible cards and compute cardWidth
+            ensureFiveVisible(VISIBLE_COUNT);
+
+            // ensure starting transform is 0
+            setTransform(0, false);
+
+            // highlight center
+            updateActive();
+
+            // enable controls
+            leftBtn.disabled = false;
+            rightBtn.disabled = false;
+          });
+
+          // Button handlers
+          leftBtn.addEventListener('click', movePrev);
+          rightBtn.addEventListener('click', moveNext);
+
+          // Keyboard navigation
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') leftBtn.click();
+            if (e.key === 'ArrowRight') rightBtn.click();
+          });
+
+          // Resize: recalc and keep visual position consistent
+          let resizeTimer = null;
+          window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+              // recompute sizes for exactly 5 visible cards
+              ensureFiveVisible(VISIBLE_COUNT);
+              // reset transform to 0 without animation to avoid jumps
+              setTransform(0, false);
+            }, 120);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
